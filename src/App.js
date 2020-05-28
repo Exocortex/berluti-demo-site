@@ -15,7 +15,7 @@ function App(props) {
           <Content style={{ padding: '1em'}}>
           <Router>
             <Switch>
-              <Route path="/demo/:productId" component={Product}></Route>
+              <Route path="/product/:productId" component={Product}></Route>
               <Route path="/" component={Products}></Route>
             </Switch>
           </Router>

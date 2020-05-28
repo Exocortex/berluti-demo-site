@@ -12,13 +12,13 @@ class Product extends React.Component {
       <div>
         <PageHeader
           style={{
-            border: "1px solid rgb(235, 237, 240)"
+            border: "1px solid rgb(235, 237, 240)",
           }}
           onBack={() => window.history.back()}
           title={product.name}
         />
-     
-        <div className="tk-container">
+
+        <div id="tk-container">
           <div
             id="player"
             style={{
@@ -26,11 +26,10 @@ class Product extends React.Component {
               width: "96%",
               marginLeft: "auto",
               marginRight: "auto",
-              background: "#F0F2F5"
+              background: "#ffffff",
             }}
           ></div>
         </div>
-
       </div>
     );
   }
@@ -48,15 +47,74 @@ class Product extends React.Component {
         assetId: `${product.threekit}`,
         stageId: `${product.stageId}`,
 
-        showConfigurator: true,
+        showConfigurator: false,
         initialConfiguration: product.config,
       })
-      .then(async api => {
-         window.player = api;
-         window.configurator = await api.getConfigurator();
-     
-  });         
+      .then(async (api) => {
+        window.player = api;
+        window.configurator = await api.getConfigurator();
+      });
 
+    document.addEventListener("mousedown", onMouseDown, false);
+
+    let clicked = false;
+    let rotation = 1;
+
+    const rotateShoe = (e) => {
+      if (e.movementX > 0) {
+        // console.log(rotation);
+        if (rotation > 11) {
+          rotation = 1;
+        }
+        setTimeout(rotation += 1, 3000);
+        // rotation += 1;
+
+        let newRotation = JSON.stringify({ Rotation: `${rotation}` });
+        newRotation = JSON.parse(newRotation);
+        window.configurator.setConfiguration(newRotation);
+        console.log(window.configurator.getConfiguration());
+      } else if (e.movementX < 0) {
+        if (rotation < 2) {
+          rotation = 11;
+        }
+        setTimeout(rotation -= 1, 3000);
+        // rotation -= 1;
+
+        let newRotation = JSON.stringify({ Rotation: `${rotation}` });
+        newRotation = JSON.parse(newRotation);
+        console.log(window.configurator.getConfiguration());
+
+        window.configurator.setConfiguration(newRotation);
+      }
+    };
+
+    function onMouseDown(e) {
+      e.preventDefault(); //prevents browser to follow links or move images
+      // code to execute on mouse click\
+      clicked = true;
+      // console.log(clicked);
+    }
+    document.addEventListener("mousemove", onMouseMove, false);
+
+    function onMouseMove(e) {
+      // code to execute on mouse mouse move
+      if (clicked) {
+        console.log("movement x ", e.movementX);
+        // console.log("drag");
+        // setTimeout(rotateShoe(), 400000)
+        rotateShoe(e);
+        // window.configurator.setConfiguration(rotateShoe())
+        // console.log(e)
+      }
+    }
+
+    document.addEventListener("mouseup", onMouseUp, false);
+
+    function onMouseUp(e) {
+      // code to execute on mouse mouse up
+      clicked = false;
+      // console.log(clicked);
+    }
   }
 }
 
