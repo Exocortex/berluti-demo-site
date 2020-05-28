@@ -47,7 +47,7 @@ class Product extends React.Component {
     // Put player here
     window
       .threekitPlayer({
-        authToken: "5feaf2eb-683b-4bcb-aa67-96d064e56ec3",
+        authToken: "fafe1cc5-0486-4b2f-8e0e-3a416f97f9d9",
         display: "image",
         el: document.getElementById("player"),
         assetId: `${product.threekit}`,
@@ -71,7 +71,7 @@ class Product extends React.Component {
     let clicked = false;
     let rotation = 1;
 
-    const rotateRight = (power) => {
+    const rotateLeft = (power) => {
       // console.log(rotation);
       if (rotation > 11) {
         rotation = 1;
@@ -87,7 +87,7 @@ class Product extends React.Component {
       }
     };
 
-    const rotateLeft = (power) => {
+    const rotateRight = (power) => {
       if (rotation < 2) {
         rotation = 11;
       }
@@ -149,26 +149,26 @@ class Product extends React.Component {
 
     const handleTouchMove = function (e) {
       // firstX = e.touches[0].clientX;
-     let xCord = {
-        aInternal: firstX,
-        aListener: function(val) {},
-        set a(val) {
-          this.aInternal = val;
-          this.aListener(val);
-        },
-        get a() {
-          return this.aInternal;
-        },
-        registerListener: function(listener) {
-          this.aListener = listener;
-        }
-      }
-      xCord.registerListener(function(val) {
-        console.log(xCord)
-        console.log(xCord.a, val);
-      });
+    //  let xCord = {
+    //     aInternal: firstX,
+    //     aListener: function(val) {},
+    //     set a(val) {
+    //       this.aInternal = val;
+    //       this.aListener(val);
+    //     },
+    //     get a() {
+    //       return this.aInternal;
+    //     },
+    //     registerListener: function(listener) {
+    //       this.aListener = listener;
+    //     }
+    //   }
+    //   xCord.registerListener(function(val) {
+    //     console.log(xCord)
+    //     console.log(xCord.a, val);
+    //   });
 
-      xCord.a = e.touches[0].clientX;
+    //   xCord.a = e.touches[0].clientX;
 
       if (firstX > e.touches[0].clientX){
         rotateRight(.25);
