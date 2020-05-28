@@ -38,6 +38,12 @@ class Product extends React.Component {
     const productId = this.props.match.params.productId;
     const product = ProductList[productId];
 
+    const makeConfig = function (config) {
+      let newRotation = JSON.stringify(config);
+      newRotation = JSON.parse(newRotation);
+      return newRotation;
+    };
+
     // Put player here
     window
       .threekitPlayer({
@@ -53,38 +59,58 @@ class Product extends React.Component {
       .then(async (api) => {
         window.player = api;
         window.configurator = await api.getConfigurator();
+        api.on(
+          window.player.scene.PHASES.RENDERED,
+          document.addEventListener("mousemove", onMouseMove, false),
+          document.addEventListener("touchmove", handleTouchMove, false),
+          document.addEventListener("touchstart", handleTouchStart, false)
+        );
       });
 
     document.addEventListener("mousedown", onMouseDown, false);
-
     let clicked = false;
     let rotation = 1;
 
+    const rotateRight = (power) => {
+      // console.log(rotation);
+      if (rotation > 11) {
+        rotation = 1;
+      }
+      // setTimeout((rotation += 1), 6000);
+      rotation += power;
+
+      //
+      if (Number.isInteger(rotation)) {
+        window.configurator.setConfiguration(
+          makeConfig({ Rotation: `${rotation}` })
+        );
+      }
+    };
+
+    const rotateLeft = (power) => {
+      if (rotation < 2) {
+        rotation = 11;
+      }
+      // setTimeout((rotation -= 1), 6000);
+      rotation -= power;
+
+      // setTimeout((rotation -= 1), 6000);
+
+      // window.configurator.setConfiguration(makeConfig({ Rotation: `${rotation}` }));
+      if (Number.isInteger(rotation)) {
+        window.configurator.setConfiguration(
+          makeConfig({ Rotation: `${rotation}` })
+        );
+      }
+    };
+
     const rotateShoe = (e) => {
       if (e.movementX > 0) {
-        // console.log(rotation);
-        if (rotation > 11) {
-          rotation = 1;
-        }
-        setTimeout(rotation += 1, 3000);
-        // rotation += 1;
-
-        let newRotation = JSON.stringify({ Rotation: `${rotation}` });
-        newRotation = JSON.parse(newRotation);
-        window.configurator.setConfiguration(newRotation);
-        console.log(window.configurator.getConfiguration());
+        rotateRight(.5);
+        // console.log(window.configurator.getConfiguration());
       } else if (e.movementX < 0) {
-        if (rotation < 2) {
-          rotation = 11;
-        }
-        setTimeout(rotation -= 1, 3000);
-        // rotation -= 1;
-
-        let newRotation = JSON.stringify({ Rotation: `${rotation}` });
-        newRotation = JSON.parse(newRotation);
-        console.log(window.configurator.getConfiguration());
-
-        window.configurator.setConfiguration(newRotation);
+        rotateLeft(.5);
+        // console.log(window.configurator.getConfiguration());
       }
     };
 
@@ -94,14 +120,13 @@ class Product extends React.Component {
       clicked = true;
       // console.log(clicked);
     }
-    document.addEventListener("mousemove", onMouseMove, false);
 
     function onMouseMove(e) {
+      console.log(e);
       // code to execute on mouse mouse move
       if (clicked) {
         console.log("movement x ", e.movementX);
         // console.log("drag");
-        // setTimeout(rotateShoe(), 400000)
         rotateShoe(e);
         // window.configurator.setConfiguration(rotateShoe())
         // console.log(e)
@@ -115,6 +140,46 @@ class Product extends React.Component {
       clicked = false;
       // console.log(clicked);
     }
+
+    let firstX;
+
+    const handleTouchStart = function (e) {
+      firstX = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = function (e) {
+      // firstX = e.touches[0].clientX;
+     let xCord = {
+        aInternal: firstX,
+        aListener: function(val) {},
+        set a(val) {
+          this.aInternal = val;
+          this.aListener(val);
+        },
+        get a() {
+          return this.aInternal;
+        },
+        registerListener: function(listener) {
+          this.aListener = listener;
+        }
+      }
+      xCord.registerListener(function(val) {
+        console.log(xCord)
+        console.log(xCord.a, val);
+      });
+
+      xCord.a = e.touches[0].clientX;
+
+      if (firstX > e.touches[0].clientX){
+        rotateRight(.25);
+      } else {
+        rotateLeft(.25);
+      }
+
+      var x = e.touches[0].clientX;
+      var y = e.touches[0].clientY;
+      // console.log(firstX);
+    };
   }
 }
 
