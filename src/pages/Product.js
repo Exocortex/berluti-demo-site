@@ -47,7 +47,7 @@ class Product extends React.Component {
     // Put player here
     window
       .threekitPlayer({
-        authToken: "fafe1cc5-0486-4b2f-8e0e-3a416f97f9d9",
+        authToken: "5feaf2eb-683b-4bcb-aa67-96d064e56ec3",
         display: "image",
         el: document.getElementById("player"),
         assetId: `${product.threekit}`,
