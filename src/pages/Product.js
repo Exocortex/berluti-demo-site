@@ -53,7 +53,7 @@ class Product extends React.Component {
         assetId: `${product.threekit}`,
         stageId: `${product.stageId}`,
 
-        showConfigurator: true,
+        showConfigurator: false,
         initialConfiguration: product.config,
       })
       .then(async (api) => {
