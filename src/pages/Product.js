@@ -3,6 +3,8 @@ import React from "react";
 import "antd/dist/antd.css";
 import { PageHeader } from "antd";
 import { ProductList } from "../config/Configs.js";
+import { Avatar } from 'antd';
+
 
 class Product extends React.Component {
   render() {
@@ -30,6 +32,10 @@ class Product extends React.Component {
             }}
           ></div>
         </div>
+        <Avatar id='clay' style={{ color: '#ffffff', backgroundColor: 'grey', margin: '5px' }}>Clay</Avatar>
+
+        <Avatar id='red' style={{ color: '#ffffff', backgroundColor: 'red', margin: '5px' }}>Red</Avatar>
+
       </div>
     );
   }
@@ -53,12 +59,19 @@ class Product extends React.Component {
         assetId: `${product.threekit}`,
         stageId: `${product.stageId}`,
 
-        showConfigurator: true,
+        showConfigurator: false,
         initialConfiguration: product.config,
       })
       .then(async (api) => {
         window.player = api;
         window.configurator = await api.getConfigurator();
+        document.getElementById('clay').addEventListener('click', function(){
+          window.configurator.setConfiguration({"Patina": "Clay"})
+        })
+
+        document.getElementById('red').addEventListener('click', function(){
+          window.configurator.setConfiguration({"Patina": "Red"})
+        })
         api.on(
           window.player.scene.PHASES.RENDERED,
           document.addEventListener("mousemove", onMouseMove, false),
