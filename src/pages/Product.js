@@ -53,7 +53,7 @@ class Product extends React.Component {
         assetId: `${product.threekit}`,
         stageId: `${product.stageId}`,
 
-        showConfigurator: false,
+        showConfigurator: true,
         initialConfiguration: product.config,
       })
       .then(async (api) => {
@@ -69,13 +69,12 @@ class Product extends React.Component {
 
     document.addEventListener("mousedown", onMouseDown, false);
     let clicked = false;
-    let rotation = 1;
+    let rotation = 0;
 
     const rotateLeft = (power) => {
       // console.log(rotation);
-      if (rotation >= 12) {
-        rotation = 1;
-        
+      if (rotation > 11) {
+        rotation = 0;
       }
       // setTimeout((rotation += 1), 6000);
       rotation += power;
@@ -85,14 +84,13 @@ class Product extends React.Component {
         window.configurator.setConfiguration(
           makeConfig({ Rotation: `${rotation}` })
         );
-        console.log(JSON.stringify(window.configurator.getConfiguration()))
-
+        console.log(JSON.stringify(window.configurator.getConfiguration()));
       }
     };
 
     const rotateRight = (power) => {
       if (rotation <= 1) {
-        rotation = 12;
+        rotation = 11;
       }
       // setTimeout((rotation -= 1), 6000);
       rotation -= power;
@@ -104,16 +102,16 @@ class Product extends React.Component {
         window.configurator.setConfiguration(
           makeConfig({ Rotation: `${rotation}` })
         );
-        console.log(JSON.stringify(window.configurator.getConfiguration()))
+        console.log(JSON.stringify(window.configurator.getConfiguration()));
       }
     };
 
     const rotateShoe = (e) => {
       if (e.movementX > 0) {
-        rotateRight(.5);
+        rotateRight(0.5);
         // console.log(window.configurator.getConfiguration());
       } else if (e.movementX < 0) {
-        rotateLeft(.5);
+        rotateLeft(0.5);
         // console.log(window.configurator.getConfiguration());
       }
     };
@@ -129,9 +127,7 @@ class Product extends React.Component {
       // console.log(e);
       // code to execute on mouse mouse move
       if (clicked) {
-
         rotateShoe(e);
-
       }
     }
 
@@ -150,11 +146,10 @@ class Product extends React.Component {
     };
 
     const handleTouchMove = function (e) {
-
-      if (firstX > e.touches[0].clientX){
-        rotateRight(.25);
+      if (firstX > e.touches[0].clientX) {
+        rotateRight(0.25);
       } else {
-        rotateLeft(.25);
+        rotateLeft(0.25);
       }
 
       var x = e.touches[0].clientX;
