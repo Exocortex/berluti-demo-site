@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import { PageHeader } from "antd";
 import { ProductList } from "../config/Configs.js";
 import Form from "../components/Form";
-import Hammer from 'hammerjs'
+import Hammer from "hammerjs";
 let clicked = false;
 let rotation = 0;
 let firstX;
@@ -16,7 +16,7 @@ const makeConfig = function (config) {
 };
 const rotateLeft = (power) => {
   // console.log(rotation);
-  if (rotation > 10) {
+  if (rotation >= 11) {
     rotation = 0;
   }
   // setTimeout((rotation += 1), 6000);
@@ -33,10 +33,11 @@ const rotateLeft = (power) => {
 
 const rotateRight = (power) => {
   if (rotation <= 1) {
-    rotation = 11;
+    rotation = 12;
   }
   // setTimeout((rotation -= 1), 6000);
   rotation -= power;
+  // console.log(rotation)
 
   // setTimeout((rotation -= 1), 6000);
 
@@ -51,10 +52,10 @@ const rotateRight = (power) => {
 
 const rotateShoe = (e) => {
   if (e.movementX > 0) {
-    rotateRight(0.25);
+    rotateRight(0.125);
     // console.log(window.configurator.getConfiguration());
   } else if (e.movementX < 0) {
-    rotateLeft(0.25);
+    rotateLeft(0.125);
     // console.log(window.configurator.getConfiguration());
   }
 };
@@ -77,22 +78,6 @@ function onMouseMove(e) {
     rotateShoe(e);
   }
 }
-
-const handleTouchStart = function (e) {
-  firstX = e.touches[0].clientX;
-};
-
-const handleTouchMove = function (e) {
-  if (firstX > e.touches[0].clientX) {
-    rotateRight(0.25);
-  } else {
-    rotateLeft(0.25);
-  }
-
-  var x = e.touches[0].clientX;
-  var y = e.touches[0].clientY;
-  // console.log(firstX);
-};
 
 class Product extends React.Component {
   render() {
@@ -129,14 +114,14 @@ class Product extends React.Component {
     const productId = this.props.match.params.productId;
     const product = ProductList[productId];
 
-    var hammertime = new Hammer(document.getElementById('threekit-container'));
+    var hammertime = new Hammer(document.getElementById("threekit-container"));
     hammertime.on("pan", function (ev) {
       if (ev.direction == 2) {
-        rotateLeft(0.25);
+        rotateLeft(.0625);
       } else if (ev.direction == 4) {
-        rotateRight(0.25);
+        rotateRight(.0625);
       }
-      console.log(ev.direction);
+      // console.log(ev.direction);
     });
 
     // Put player here
@@ -158,13 +143,7 @@ class Product extends React.Component {
           window.player.scene.PHASES.RENDERED,
           document
             .getElementById("threekit-container")
-            .addEventListener("mousemove", onMouseMove, false),
-          // document
-          //   .getElementById("threekit-container")
-          //   .addEventListener("touchmove", handleTouchMove, false),
-          // document
-          //   .getElementById("threekit-container")
-          //   .addEventListener("touchstart", handleTouchStart, false)
+            .addEventListener("mousemove", onMouseMove, false)
         );
       });
 
@@ -188,12 +167,6 @@ class Product extends React.Component {
       .getElementById("threekit-container")
       .removeEventListener("mouseup", onMouseUp);
 
-    // document
-    //   .getElementById("threekit-container")
-    //   .removeEventListener("touchmove", handleTouchMove);
-    // document
-    //   .getElementById("threekit-container")
-    //   .removeEventListener("touchstart", handleTouchStart);
     console.log("unmounted");
   }
 }
