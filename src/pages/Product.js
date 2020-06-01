@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import { PageHeader } from "antd";
 import { ProductList } from "../config/Configs.js";
 import Form from "../components/Form";
+import Hammer from 'hammerjs'
 let clicked = false;
 let rotation = 0;
 let firstX;
@@ -128,6 +129,16 @@ class Product extends React.Component {
     const productId = this.props.match.params.productId;
     const product = ProductList[productId];
 
+    var hammertime = new Hammer(document.getElementById('threekit-container'));
+    hammertime.on("pan", function (ev) {
+      if (ev.direction == 2) {
+        rotateLeft(0.25);
+      } else if (ev.direction == 4) {
+        rotateRight(0.25);
+      }
+      console.log(ev.direction);
+    });
+
     // Put player here
     window
       .threekitPlayer({
@@ -145,25 +156,44 @@ class Product extends React.Component {
         window.configurator = await api.getConfigurator();
         api.on(
           window.player.scene.PHASES.RENDERED,
-          document.getElementById('threekit-container').addEventListener("mousemove", onMouseMove, false),
-          document.getElementById('threekit-container').addEventListener("touchmove", handleTouchMove, false),
-          document.getElementById('threekit-container').addEventListener("touchstart", handleTouchStart, false)
+          document
+            .getElementById("threekit-container")
+            .addEventListener("mousemove", onMouseMove, false),
+          // document
+          //   .getElementById("threekit-container")
+          //   .addEventListener("touchmove", handleTouchMove, false),
+          // document
+          //   .getElementById("threekit-container")
+          //   .addEventListener("touchstart", handleTouchStart, false)
         );
       });
 
-    document.getElementById('threekit-container').addEventListener("mousedown", onMouseDown, false);
+    document
+      .getElementById("threekit-container")
+      .addEventListener("mousedown", onMouseDown, false);
 
-    document.getElementById('threekit-container').addEventListener("mouseup", onMouseUp, false);
+    document
+      .getElementById("threekit-container")
+      .addEventListener("mouseup", onMouseUp, false);
   }
 
   componentWillUnmount() {
-    document.getElementById('threekit-container').removeEventListener("mousemove", onMouseMove);
-    document.getElementById('threekit-container').removeEventListener("mmousedown", onMouseDown);
-    document.getElementById('threekit-container').removeEventListener("mouseup", onMouseUp);
+    document
+      .getElementById("threekit-container")
+      .removeEventListener("mousemove", onMouseMove);
+    document
+      .getElementById("threekit-container")
+      .removeEventListener("mmousedown", onMouseDown);
+    document
+      .getElementById("threekit-container")
+      .removeEventListener("mouseup", onMouseUp);
 
-
-    document.getElementById('threekit-container').removeEventListener("touchmove", handleTouchMove);
-    document.getElementById('threekit-container').removeEventListener("touchstart", handleTouchStart);
+    // document
+    //   .getElementById("threekit-container")
+    //   .removeEventListener("touchmove", handleTouchMove);
+    // document
+    //   .getElementById("threekit-container")
+    //   .removeEventListener("touchstart", handleTouchStart);
     console.log("unmounted");
   }
 }
