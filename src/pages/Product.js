@@ -3,7 +3,7 @@ import React from "react";
 import "antd/dist/antd.css";
 import { PageHeader } from "antd";
 import { ProductList } from "../config/Configs.js";
-import { Avatar } from 'antd';
+import Form from "../components/Form"
 
 
 class Product extends React.Component {
@@ -32,10 +32,8 @@ class Product extends React.Component {
             }}
           ></div>
         </div>
-        <Avatar id='clay' style={{ color: '#ffffff', backgroundColor: 'grey', margin: '5px' }}>Clay</Avatar>
-
-        <Avatar id='red' style={{ color: '#ffffff', backgroundColor: 'red', margin: '5px' }}>Red</Avatar>
-
+        <Form config={product.config}/>
+  
       </div>
     );
   }
@@ -65,13 +63,6 @@ class Product extends React.Component {
       .then(async (api) => {
         window.player = api;
         window.configurator = await api.getConfigurator();
-        document.getElementById('clay').addEventListener('click', function(){
-          window.configurator.setConfiguration({"Patina": "Clay"})
-        })
-
-        document.getElementById('red').addEventListener('click', function(){
-          window.configurator.setConfiguration({"Patina": "Red"})
-        })
         api.on(
           window.player.scene.PHASES.RENDERED,
           document.addEventListener("mousemove", onMouseMove, false),
@@ -86,7 +77,7 @@ class Product extends React.Component {
 
     const rotateLeft = (power) => {
       // console.log(rotation);
-      if (rotation > 11) {
+      if (rotation > 10) {
         rotation = 0;
       }
       // setTimeout((rotation += 1), 6000);
@@ -121,10 +112,10 @@ class Product extends React.Component {
 
     const rotateShoe = (e) => {
       if (e.movementX > 0) {
-        rotateRight(0.5);
+        rotateRight(0.25);
         // console.log(window.configurator.getConfiguration());
       } else if (e.movementX < 0) {
-        rotateLeft(0.5);
+        rotateLeft(0.25);
         // console.log(window.configurator.getConfiguration());
       }
     };
