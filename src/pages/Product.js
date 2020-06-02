@@ -5,9 +5,10 @@ import { PageHeader } from "antd";
 import { ProductList } from "../config/Configs.js";
 import Form from "../components/Form";
 import Hammer from "hammerjs";
+
 let clicked = false;
 let rotation = 0;
-let firstX;
+
 
 const makeConfig = function (config) {
   let newRotation = JSON.stringify(config);
@@ -89,7 +90,7 @@ class Product extends React.Component {
           style={{
             border: "1px solid rgb(235, 237, 240)",
           }}
-          onBack={() => window.history.back()}
+          onBack={() => window.location.assign('/')}
           title={product.name}
         />
 
