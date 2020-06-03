@@ -6,6 +6,9 @@ import { ProductList } from "../config/Configs.js";
 import Form from "../components/Form";
 import Hammer from "hammerjs";
 
+import isEqual from "lodash/isEqual";
+
+
 let clicked = false;
 let rotation = 0;
 
@@ -115,15 +118,15 @@ class Product extends React.Component {
     const productId = this.props.match.params.productId;
     const product = ProductList[productId];
 
-    var hammertime = new Hammer(document.getElementById("threekit-container"));
-    hammertime.on("pan", function (ev) {
-      if (ev.direction == 2) {
-        rotateLeft(.0625);
-      } else if (ev.direction == 4) {
-        rotateRight(.0625);
-      }
-      // console.log(ev.direction);
-    });
+    // var hammertime = new Hammer(document.getElementById("threekit-container"));
+    // hammertime.on("pan", function (ev) {
+    //   if (ev.direction == 2) {
+    //     rotateLeft(.0625);
+    //   } else if (ev.direction == 4) {
+    //     rotateRight(.0625);
+    //   }
+    //    console.log(ev.direction);
+    // });
 
     // Put player here
     window
@@ -142,19 +145,83 @@ class Product extends React.Component {
         window.configurator = await api.getConfigurator();
         api.on(
           window.player.scene.PHASES.RENDERED,
-          document
-            .getElementById("threekit-container")
-            .addEventListener("mousemove", onMouseMove, false)
+          apply2DSpin("Rotation")
+          // document
+          //   .getElementById("threekit-container")
+          //   .addEventListener("mousemove", onMouseMove, false)
         );
       });
 
-    document
-      .getElementById("threekit-container")
-      .addEventListener("mousedown", onMouseDown, false);
+    // document
+    //   .getElementById("threekit-container")
+    //   .addEventListener("mousedown", onMouseDown, false);
 
-    document
-      .getElementById("threekit-container")
-      .addEventListener("mouseup", onMouseUp, false);
+    // document
+    //   .getElementById("threekit-container")
+    //   .addEventListener("mouseup", onMouseUp, false);
+
+
+
+    function apply2DSpin(attrName = "Angle") {
+      return async (player) => {
+        const configurator = await window.player.getConfigurator();
+        add2DSpin({ player, configurator, attrName });
+        return player;
+      };
+    }
+    /****************************************************
+     Handler
+    ****************************************************/
+    function add2DSpin({ configurator, attrName = "Angle" }) {
+      let curPct = 0;
+      const attrCount = configurator
+        .getAttributes()
+        .find((attr) => attr.name === attrName).values.length;
+      const threshold = 1 / attrCount;
+      return window.player.tools.addTool({
+        key: "2dspin",
+        active: true,
+        enabled: true,
+        handlers: {
+          drag: () => ({
+            handle: async (ev) => {
+              const config = configurator.getConfiguration();
+              const deltaT = ev.deltaX / ev.rect.width;
+              const newPct = curPct + deltaT;
+              if (Math.abs(newPct) > threshold) {
+                const curIndex = getOptionIndex(
+                  configurator,
+                  attrName,
+                  config[attrName]
+                );
+                const increment = newPct > 0 ? 1 : -1;
+                const newIndex = (curIndex + increment) % attrCount;
+                const newOption = getOptionByIndex(
+                  configurator,
+                  attrName,
+                  newIndex < 0 ? attrCount + newIndex : newIndex
+                );
+                configurator.setConfiguration({ [attrName]: newOption });
+              }
+              curPct = newPct % threshold;
+            },
+            momentum: true,
+          }),
+        },
+      });
+    }
+    function getOptionByIndex(configurator, attrName, index) {
+      if (!configurator) return null;
+      const attrs = configurator.getAttributes();
+      const attribute = attrs.find((attr) => attr.name === attrName);
+      return attribute.values[index];
+    }
+    function getOptionIndex(configurator, attrName, option) {
+      if (!configurator) return null;
+      const attrs = configurator.getAttributes();
+      const attribute = attrs.find((attr) => attr.name === attrName);
+      return attribute.values.findIndex((val) => isEqual(val, option));
+    }
   }
 
   componentWillUnmount() {
