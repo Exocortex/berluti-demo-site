@@ -8,10 +8,8 @@ import Hammer from "hammerjs";
 
 import isEqual from "lodash/isEqual";
 
-
 let clicked = false;
 let rotation = 0;
-
 
 const makeConfig = function (config) {
   let newRotation = JSON.stringify(config);
@@ -93,7 +91,7 @@ class Product extends React.Component {
           style={{
             border: "1px solid rgb(235, 237, 240)",
           }}
-          onBack={() => window.location.assign('/')}
+          onBack={() => window.location.assign("/")}
           title={product.name}
         />
 
@@ -145,7 +143,7 @@ class Product extends React.Component {
         window.configurator = await api.getConfigurator();
         api.on(
           window.player.scene.PHASES.RENDERED,
-          apply2DSpin("Rotation")
+          apply2DSpin({ attrName: "Rotation", direction: -1 })
           // document
           //   .getElementById("threekit-container")
           //   .addEventListener("mousemove", onMouseMove, false)
@@ -160,19 +158,25 @@ class Product extends React.Component {
     //   .getElementById("threekit-container")
     //   .addEventListener("mouseup", onMouseUp, false);
 
-
-
-    function apply2DSpin(attrName = "Angle") {
+    /****************************************************
+ Composer
+****************************************************/
+     function apply2DSpin({ attrName = "Angle", direction = 1 }) {
       return async (player) => {
         const configurator = await window.player.getConfigurator();
-        add2DSpin({ player, configurator, attrName });
+        add2DSpin({ attrName, configurator, direction, player });
         return player;
       };
     }
     /****************************************************
-     Handler
-    ****************************************************/
-    function add2DSpin({ configurator, attrName = "Angle" }) {
+ Handler
+****************************************************/
+   function add2DSpin({
+      attrName = "Angle",
+      configurator,
+      direction,
+      player,
+    }) {
       let curPct = 0;
       const attrCount = configurator
         .getAttributes()
@@ -185,7 +189,7 @@ class Product extends React.Component {
         handlers: {
           drag: () => ({
             handle: async (ev) => {
-              const config = configurator.getConfiguration();
+              const config = window.configurator.getConfiguration();
               const deltaT = ev.deltaX / ev.rect.width;
               const newPct = curPct + deltaT;
               if (Math.abs(newPct) > threshold) {
@@ -194,7 +198,8 @@ class Product extends React.Component {
                   attrName,
                   config[attrName]
                 );
-                const increment = newPct > 0 ? 1 : -1;
+                const increment =
+                  (newPct > 0 ? 1 : -1) * (direction < 0 ? -1 : 1);
                 const newIndex = (curIndex + increment) % attrCount;
                 const newOption = getOptionByIndex(
                   configurator,
