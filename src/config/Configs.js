@@ -8,7 +8,7 @@ const ProductList = {
   //   brand: "Luxury",
   // },
   "1": {
-    imageURL: "https://solutions-engineering.s3.amazonaws.com/berluti-demo/thumbs/Chevron_01.jpg",
+    imageURL: "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/1/Chevron_02.jpg",
     threekit: "59b4f7fa-c5fb-4567-b6b8-358d07f80e06",
     stageId: "812236d6-21a0-432d-82b7-1d6aa94c6897",
     name: "Chevron",

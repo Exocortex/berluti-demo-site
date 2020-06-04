@@ -23,9 +23,7 @@ class Product extends React.Component {
     };
   }
 
-  getImg(config, map) {
-    return `${map[config][config]}`;
-  }
+
 
   componentDidMount() {
     const productId = this.props.match.params.productId;
@@ -83,24 +81,8 @@ class Product extends React.Component {
                 }}
               ></div>
             </div>
-            <Form config={product.config} />
-            {product.name == "Chevron" ? (
-              <Button
-                onClick={() =>
-                  window.open(
-                    this.getImg(
-                      window.configurator.getConfiguration().Rotation,
-                      chevronMap
-                    ),
-                    "_blank"
-                  )
-                }
-              >
-                Detailed View
-              </Button>
-            ) : (
-              <p></p>
-            )}
+            <Form config={product.config} product={product}/>
+    
           </div>
         )}
       </div>
