@@ -158,27 +158,29 @@ class Product extends React.Component {
     //   .getElementById("threekit-container")
     //   .addEventListener("mouseup", onMouseUp, false);
 
-    /****************************************************
- Composer
-****************************************************/
-     function apply2DSpin({ attrName = "Angle", direction = 1 }) {
+   function apply2DSpin({
+      attrName = "Rotation",
+      direction = 1,
+      maxWidth = 500,
+    }) {
       return async (player) => {
         const configurator = await window.player.getConfigurator();
-        add2DSpin({ attrName, configurator, direction, player });
+        add2DSpin({ attrName, configurator, direction, maxWidth, player });
         return player;
       };
     }
     /****************************************************
- Handler
-****************************************************/
-   function add2DSpin({
+     Handler
+    ****************************************************/
+    function add2DSpin({
       attrName = "Angle",
       configurator,
-      direction,
+      direction = 1,
+      maxWidth = 500,
       player,
     }) {
       let curPct = 0;
-      const attrCount = configurator
+      const attrCount = window.configurator
         .getAttributes()
         .find((attr) => attr.name === attrName).values.length;
       const threshold = 1 / attrCount;
@@ -189,8 +191,8 @@ class Product extends React.Component {
         handlers: {
           drag: () => ({
             handle: async (ev) => {
-              const config = window.configurator.getConfiguration();
-              const deltaT = ev.deltaX / ev.rect.width;
+              const config = configurator.getConfiguration();
+              const deltaT = ev.deltaX / Math.max(ev.rect.width, maxWidth);
               const newPct = curPct + deltaT;
               if (Math.abs(newPct) > threshold) {
                 const curIndex = getOptionIndex(
@@ -198,8 +200,7 @@ class Product extends React.Component {
                   attrName,
                   config[attrName]
                 );
-                const increment =
-                  (newPct > 0 ? 1 : -1) * (direction < 0 ? -1 : 1);
+                const increment = (newPct > 0 ? 1 : -1) * (direction < 0 ? -1 : 1);
                 const newIndex = (curIndex + increment) % attrCount;
                 const newOption = getOptionByIndex(
                   configurator,
