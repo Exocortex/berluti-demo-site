@@ -1,32 +1,31 @@
 import isEqual from "lodash/isEqual";
-/****************************************************
- Player Initialization
-****************************************************/
-window
-  .threekitPlayer({
-    ...initParams,
-  })
-  .then(apply2DSpin("Angle"));
-/****************************************************
- Composer
-****************************************************/
-function apply2DSpin(attrName = "Angle") {
+export function apply2DSpin({
+  attrName = "Rotation",
+  direction = 1,
+  maxWidth = 500,
+}) {
   return async (player) => {
-    const configurator = await player.getConfigurator();
-    add2DSpin({ player, configurator, attrName });
+    const configurator = await window.player.getConfigurator();
+    add2DSpin({ attrName, configurator, direction, maxWidth, player });
     return player;
   };
 }
 /****************************************************
  Handler
 ****************************************************/
-function add2DSpin({ player, configurator, attrName = "Angle" }) {
+export function add2DSpin({
+  attrName = "Angle",
+  configurator,
+  direction = 1,
+  maxWidth = 500,
+  player,
+}, getImg) {
   let curPct = 0;
-  const attrCount = configurator
+  const attrCount = window.configurator
     .getAttributes()
     .find((attr) => attr.name === attrName).values.length;
   const threshold = 1 / attrCount;
-  return player.tools.addTool({
+  return window.player.tools.addTool({
     key: "2dspin",
     active: true,
     enabled: true,
@@ -34,7 +33,7 @@ function add2DSpin({ player, configurator, attrName = "Angle" }) {
       drag: () => ({
         handle: async (ev) => {
           const config = configurator.getConfiguration();
-          const deltaT = ev.deltaX / ev.rect.width;
+          const deltaT = ev.deltaX / Math.max(ev.rect.width, maxWidth);
           const newPct = curPct + deltaT;
           if (Math.abs(newPct) > threshold) {
             const curIndex = getOptionIndex(
@@ -42,14 +41,14 @@ function add2DSpin({ player, configurator, attrName = "Angle" }) {
               attrName,
               config[attrName]
             );
-            const increment = newPct > 0 ? 1 : -1;
+            const increment = (newPct > 0 ? 1 : -1) * (direction < 0 ? -1 : 1);
             const newIndex = (curIndex + increment) % attrCount;
             const newOption = getOptionByIndex(
               configurator,
               attrName,
               newIndex < 0 ? attrCount + newIndex : newIndex
             );
-            configurator.setConfiguration({ [attrName]: newOption });
+            configurator.setConfiguration({ [attrName]: newOption })
           }
           curPct = newPct % threshold;
         },
