@@ -1,7 +1,7 @@
 import React from "react";
 import "./Products.css";
 import "antd/dist/antd.css";
-import { PageHeader, Button } from "antd";
+import { PageHeader } from "antd";
 import { ProductList } from "../config/Configs.js";
 import { BrowserRouter as Link } from "react-router-dom";
 

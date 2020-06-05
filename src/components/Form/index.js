@@ -1,9 +1,7 @@
 import React from "react";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Badge, Tag } from "antd";
 import { chevronMap } from "../../config/map/chevron";
-import {
-  SearchOutlined,
-} from '@ant-design/icons';
+import { SearchOutlined } from "@ant-design/icons";
 let newPatina = "";
 
 const getImg = function (config, map) {
@@ -15,19 +13,28 @@ function Form(props) {
   return props.config ? (
     <div>
       {Object.values(props.config.Patina).map((attr, i) => (
-        <Avatar
-          size={"large"}
-          style={{ color: "#fffffff", margin: "5px" }}
-          src={props.product.bg[i]}
-          onClick={() => window.configurator.setConfiguration({ Patina: attr })}
-        >
-          {attr}
-        </Avatar>
+        <Tag style={{margin: '5px'}}>
+          <Avatar
+            size={"large"}
+            style={{ color: "#fffffff", margin: "5px" }}
+            src={props.product.bg[i]}
+            onClick={() =>
+              window.configurator.setConfiguration({ Patina: attr })
+            }
+          >
+            {attr}
+          </Avatar>
+          {attr == 'Chevron' ? 'Nero Grigio' : attr}
+        </Tag>
       ))}
       {props.product.name == "Chevron" ? (
         <Avatar
           size={"large"}
-          style={{ color: "#000000", backgroundColor: "#ffffff", margin: "5px" }}
+          style={{
+            color: "#000000",
+            backgroundColor: "#ffffff",
+            margin: "5px",
+          }}
           onClick={() =>
             window.open(
               getImg(
