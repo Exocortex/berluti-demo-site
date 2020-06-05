@@ -1,5 +1,5 @@
 import React from "react";
-// import './Product.css';
+import "./Products.css";
 import "antd/dist/antd.css";
 import { PageHeader, Button } from "antd";
 import { ProductList } from "../config/Configs.js";
@@ -15,6 +15,14 @@ import isEqual from "lodash/isEqual";
 
 let link = "";
 
+let clicked = false;
+
+const hideHand = () => {
+  document.getElementById("hand-indicator").classList.remove("hand");
+  document.getElementById("hand-indicator").classList.remove("bounce-2");
+  document.getElementById("hand-indicator").style = "display: none";
+};
+
 class Product extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +34,22 @@ class Product extends React.Component {
   componentDidMount() {
     const productId = this.props.match.params.productId;
     const product = ProductList[productId];
+
+    if (clicked == false) {
+      document
+        .getElementById("threekit-container")
+        .addEventListener("mousedown", function () {
+          // document.getElementById("hand-container").remove();
+          hideHand();
+        });
+
+        document
+        .getElementById("threekit-container")
+        .addEventListener("touchstart", function () {
+          // document.getElementById("hand-container").remove();
+          hideHand();
+        });
+    }
 
     !product
       ? console.log("no product")
@@ -44,14 +68,15 @@ class Product extends React.Component {
           .then(async (api) => {
             window.player = api;
             window.configurator = await api.getConfigurator();
-            await window.configurator.prefetchAttributes(['Rotation']);
+            await window.configurator.prefetchAttributes(["Rotation"]);
             // api.on(
             //   window.player.scene.PHASES.PRELOADED,
             //   console.log('preload')
             // );
 
             api.on(
-              window.player.scene.PHASES.LOADED, apply2DSpin({ attrName: "Rotation", direction: -1 })
+              window.player.scene.PHASES.LOADED,
+              apply2DSpin({ attrName: "Rotation", direction: -1 })
             );
           });
   }
@@ -73,7 +98,17 @@ class Product extends React.Component {
               onBack={() => window.location.assign("/")}
               title={product.name}
             />
+
             <div id="threekit-container">
+              <div className="stage" id="hand-container">
+                <div id="hand-indicator" class="hand bounce-2">
+                  <img
+                    style={{ height: "30px", width: "30px" }}
+                    src="https://solutions-engineering.s3.amazonaws.com/media/web-assets/hand.png"
+                  />
+                </div>
+              </div>
+
               <div
                 id="player"
                 style={{
@@ -85,6 +120,7 @@ class Product extends React.Component {
                 }}
               ></div>
             </div>
+
             <Form config={product.config} product={product} />
           </div>
         )}

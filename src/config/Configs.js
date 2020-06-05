@@ -13,7 +13,7 @@ const ProductList = {
     stageId: "812236d6-21a0-432d-82b7-1d6aa94c6897",
     name: "Chevron",
     config: { Patina: ["Chevron"], Rotation: "2" },
-    brand: "Luxury Shoe",
+    brand: "4 Styles",
   },
 };
 export { ProductList };
