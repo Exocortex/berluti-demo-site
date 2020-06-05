@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Button, Badge, Tag } from "antd";
+import { Avatar, Button, Badge, Tag, Dropdown, Menu } from "antd";
 import { chevronMap } from "../../config/map/chevron";
 import { SearchOutlined } from "@ant-design/icons";
 import Magnify from "../Magnify";
@@ -9,14 +9,16 @@ const getImg = function (config, map) {
   return `${map[config][config]}`;
 };
 
+
+
 function Form(props) {
   newPatina = props.config.Patina;
-  return props.config ? (
-    <div>
-      {props.product.magnify ? <Magnify map={chevronMap} /> : <p></p>}
-      <br />
+
+  const menu = (
+    <Menu >
       {Object.values(props.config.Patina).map((attr, i) => (
-        <Tag style={{ margin: "5px" }}>
+      <Menu.Item>
+        
           <Avatar
             size={"large"}
             style={{ color: "#fffffff", margin: "5px" }}
@@ -24,12 +26,25 @@ function Form(props) {
             onClick={() =>
               window.configurator.setConfiguration({ Patina: attr })
             }
-          >
-            {attr}
-          </Avatar>
+          />
+          
+            
+        
           {attr == "Chevron" ? "Nero Grigio" : attr}
-        </Tag>
+          </Menu.Item>
       ))}
+    </Menu>
+  )
+
+  return props.config ? (
+    <div>
+      {props.product.magnify ? <Magnify map={chevronMap} /> : <p></p>}
+      <br />
+      <Dropdown overlay={menu}>
+        <Button>
+          Select Patina 
+        </Button>
+      </Dropdown>
     </div>
   ) : (
     <div></div>
