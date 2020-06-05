@@ -51,7 +51,7 @@ class Product extends React.Component {
             // );
 
             api.on(
-              window.player.scene.PHASES.PRELOADED, apply2DSpin({ attrName: "Rotation", direction: -1 })
+              window.player.scene.PHASES.LOADED, apply2DSpin({ attrName: "Rotation", direction: -1 })
             );
           });
   }
