@@ -5,6 +5,7 @@
     position: absolute;
     z-index: 100;
     top: 30%;
+
 }
 
 .hand {
@@ -19,6 +20,7 @@
     z-index: 10;
     transform-origin: bottom;
     position: relative;
+  
 }
 
 .bounce-2 {
@@ -46,4 +48,9 @@
     100% {
         transform: translateX(100);
     }
+}
+
+#threekit-container{
+    cursor: -webkit-grab; 
+    cursor: grab;
 }
