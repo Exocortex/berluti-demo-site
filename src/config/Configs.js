@@ -22,6 +22,7 @@ const ProductList = {
 
     ],
     brand: "4 Styles",
+    magnify: true
   },
 };
 export { ProductList };

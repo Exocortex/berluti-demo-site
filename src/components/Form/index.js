@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar, Button, Badge, Tag } from "antd";
 import { chevronMap } from "../../config/map/chevron";
 import { SearchOutlined } from "@ant-design/icons";
+import Magnify from "../Magnify";
 let newPatina = "";
 
 const getImg = function (config, map) {
@@ -12,8 +13,10 @@ function Form(props) {
   newPatina = props.config.Patina;
   return props.config ? (
     <div>
+      {props.product.magnify ? <Magnify map={chevronMap} /> : <p></p>}
+      <br />
       {Object.values(props.config.Patina).map((attr, i) => (
-        <Tag style={{margin: '5px'}}>
+        <Tag style={{ margin: "5px" }}>
           <Avatar
             size={"large"}
             style={{ color: "#fffffff", margin: "5px" }}
@@ -24,32 +27,9 @@ function Form(props) {
           >
             {attr}
           </Avatar>
-          {attr == 'Chevron' ? 'Nero Grigio' : attr}
+          {attr == "Chevron" ? "Nero Grigio" : attr}
         </Tag>
       ))}
-      {props.product.name == "Chevron" ? (
-        <Avatar
-          size={"large"}
-          style={{
-            color: "#000000",
-            backgroundColor: "#ffffff",
-            margin: "5px",
-          }}
-          onClick={() =>
-            window.open(
-              getImg(
-                window.configurator.getConfiguration().Rotation,
-                chevronMap
-              ),
-              "_blank"
-            )
-          }
-        >
-          <SearchOutlined />
-        </Avatar>
-      ) : (
-        <p></p>
-      )}
     </div>
   ) : (
     <div></div>

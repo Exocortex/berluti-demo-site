@@ -30,7 +30,7 @@ class Product extends React.Component {
     super(props);
     this.state = {
       img: "",
-      loaded: false
+      loaded: false,
     };
   }
 
@@ -84,7 +84,7 @@ class Product extends React.Component {
 
             api.on(
               window.player.scene.PHASES.RENDERED,
-              this.setState({loaded: true})
+              this.setState({ loaded: true })
             );
           });
   }
