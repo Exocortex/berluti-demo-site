@@ -17,6 +17,8 @@ let link = "";
 
 let clicked = false;
 
+let loaded = false;
+
 const hideHand = () => {
   document.getElementById("hand-indicator").classList.remove("hand");
   document.getElementById("hand-indicator").classList.remove("bounce-2");
@@ -28,6 +30,7 @@ class Product extends React.Component {
     super(props);
     this.state = {
       img: "",
+      loaded: false
     };
   }
 
@@ -43,7 +46,7 @@ class Product extends React.Component {
           hideHand();
         });
 
-        document
+      document
         .getElementById("threekit-container")
         .addEventListener("touchstart", function () {
           // document.getElementById("hand-container").remove();
@@ -78,6 +81,11 @@ class Product extends React.Component {
               window.player.scene.PHASES.LOADED,
               apply2DSpin({ attrName: "Rotation", direction: -1 })
             );
+
+            api.on(
+              window.player.scene.PHASES.RENDERED,
+              this.setState({loaded: true})
+            );
           });
   }
   render() {
@@ -100,14 +108,18 @@ class Product extends React.Component {
             />
 
             <div id="threekit-container">
-              <div className="stage" id="hand-container">
-                <div id="hand-indicator" class="hand bounce-2">
-                  <img
-                    style={{ height: "30px", width: "30px" }}
-                    src="https://solutions-engineering.s3.amazonaws.com/media/web-assets/hand.png"
-                  />
+              {this.state.loaded ? (
+                <div className="stage" id="hand-container">
+                  <div id="hand-indicator" class="hand bounce-2">
+                    <img
+                      style={{ height: "30px", width: "30px" }}
+                      src="https://solutions-engineering.s3.amazonaws.com/media/web-assets/hand.png"
+                    />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <p></p>
+              )}
 
               <div
                 id="player"
