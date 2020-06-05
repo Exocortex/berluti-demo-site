@@ -17,7 +17,7 @@ export function add2DSpin({
   attrName = "Angle",
   configurator,
   direction = 1,
-  maxWidth = 500,
+  maxWidth = 100,
   player,
 }, getImg) {
   let curPct = 0;

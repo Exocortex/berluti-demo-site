@@ -23,8 +23,6 @@ class Product extends React.Component {
     };
   }
 
-
-
   componentDidMount() {
     const productId = this.props.match.params.productId;
     const product = ProductList[productId];
@@ -46,10 +44,14 @@ class Product extends React.Component {
           .then(async (api) => {
             window.player = api;
             window.configurator = await api.getConfigurator();
+            await window.configurator.prefetchAttributes(['Rotation']);
+            api.on(
+              window.player.scene.PHASES.PRELOADED,
+              console.log('preload')
+            );
 
             api.on(
-              window.player.scene.PHASES.RENDERED,
-              apply2DSpin({ attrName: "Rotation", direction: -1 })
+              window.player.scene.PHASES.LOADED, apply2DSpin({ attrName: "Rotation", direction: -1 })
             );
           });
   }
@@ -59,7 +61,9 @@ class Product extends React.Component {
     return (
       <div id="s">
         {!product ? (
-          <div>Invalid product URL. Please navigate <a href="/">home</a></div>
+          <div>
+            Invalid product URL. Please navigate <a href="/">home</a>
+          </div>
         ) : (
           <div>
             <PageHeader
@@ -81,8 +85,7 @@ class Product extends React.Component {
                 }}
               ></div>
             </div>
-            <Form config={product.config} product={product}/>
-    
+            <Form config={product.config} product={product} />
           </div>
         )}
       </div>
