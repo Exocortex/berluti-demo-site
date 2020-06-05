@@ -10,29 +10,22 @@ const getImg = function (config, map) {
 
 function Magnify(props) {
   return (
-    <div>
-      {/* <Tag style={{ margin: "5px" }}> */}
-        <Avatar
-          size={"large"}
-          style={{
-            color: "#000000",
-            backgroundColor: "#ffffff",
-            margin: "5px",
-          }}
-          onClick={() =>
-            window.open(
-              getImg(
-                window.configurator.getConfiguration().Rotation,
-                props.map
-              ),
-              "_blank"
-            )
-          }
-        >
-          <SearchOutlined />
-        </Avatar>
-      {/* </Tag> */}
-    </div>
+    <Avatar
+      size={"large"}
+      style={{
+        color: "#000000",
+        backgroundColor: "#ffffff",
+        margin: "5px",
+      }}
+      onClick={() =>
+        window.open(
+          getImg(window.configurator.getConfiguration().Rotation, props.map),
+          "_blank"
+        )
+      }
+    >
+      <SearchOutlined />
+    </Avatar>
   );
 }
 
