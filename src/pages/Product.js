@@ -45,13 +45,13 @@ class Product extends React.Component {
             window.player = api;
             window.configurator = await api.getConfigurator();
             await window.configurator.prefetchAttributes(['Rotation']);
-            api.on(
-              window.player.scene.PHASES.PRELOADED,
-              console.log('preload')
-            );
+            // api.on(
+            //   window.player.scene.PHASES.PRELOADED,
+            //   console.log('preload')
+            // );
 
             api.on(
-              window.player.scene.PHASES.LOADED, apply2DSpin({ attrName: "Rotation", direction: -1 })
+              window.player.scene.PHASES.PRELOADED, apply2DSpin({ attrName: "Rotation", direction: -1 })
             );
           });
   }
