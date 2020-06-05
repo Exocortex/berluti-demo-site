@@ -14,10 +14,11 @@ function Form(props) {
   newPatina = props.config.Patina;
   return props.config ? (
     <div>
-      {Object.values(props.config.Patina).map((attr) => (
+      {Object.values(props.config.Patina).map((attr, i) => (
         <Avatar
           size={"large"}
-          style={{ color: "#fffffff", backgroundColor: "grey", margin: "5px" }}
+          style={{ color: "#fffffff", margin: "5px" }}
+          src={props.product.bg[i]}
           onClick={() => window.configurator.setConfiguration({ Patina: attr })}
         >
           {attr}
