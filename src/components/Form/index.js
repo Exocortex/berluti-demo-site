@@ -15,17 +15,19 @@ function Form(props) {
   const menu = (
     <Menu>
       {Object.values(props.config.Patina).map((attr, i) => (
-        <Menu.Item>
+        <Menu.Item
+          onClick={() =>
+            window.configurator.setConfiguration({ Patina: `${attr}` })
+          }
+        >
           <Avatar
             size={"large"}
             style={{ color: "#fffffff", margin: "5px" }}
             src={props.product.bg[i]}
-            onClick={() =>
-              window.configurator.setConfiguration({ Patina: attr })
-            }
           />
 
-          {attr == "Chevron" ? "Nero Grigio" : attr}
+          {/* {attr == "Chevron" ? "Nero Grigio" : attr} */}
+          {attr}
         </Menu.Item>
       ))}
     </Menu>

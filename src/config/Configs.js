@@ -13,11 +13,11 @@ const ProductList = {
     threekit: "59b4f7fa-c5fb-4567-b6b8-358d07f80e06",
     stageId: "812236d6-21a0-432d-82b7-1d6aa94c6897",
     name: "Chevron",
-    config: { Patina: ["Chevron", "Brun", "TDM Intenso", "Simila Red"], Rotation: "2" },
+    config: { Patina: ["TDM Intenso", "Nero Grigio", "Brun", "Simila Red"], Rotation: "2" },
     bg: [
+      "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/tdm_intenso.png",
       "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/nero_grigio.jpg",
       "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/brun.png",
-      "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/tdm_intenso.png",
       "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/simila_red.png"
 
     ],
