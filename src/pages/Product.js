@@ -124,7 +124,7 @@ class Product extends React.Component {
               <div
                 id="player"
                 style={{
-                  height: '400px',
+                  height: '50vh',
                   width: "100%",
                   marginLeft: "auto",
                   marginRight: "auto",
