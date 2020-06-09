@@ -1,51 +1,51 @@
 const chevronMap = [
     {
       "0":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_00.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_00.jpg",
     },
     {
       "1":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_01.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_01.jpg",
     },
     {
       "2":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_02.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_02.jpg",
     },
     {
       "3":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_03.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_03.jpg",
     },
     {
       "4":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_04.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_04.jpg",
     },
     {
       "5":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_05.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_05.jpg",
     },
     {
       "6":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_06.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_06.jpg",
     },
     {
       "7":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_07.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_07.jpg",
     },
     {
       "8":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_08.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_08.jpg",
     },
     {
       "9":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_09.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_09.jpg",
     },
     {
       "10":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_10.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_10.jpg",
     },
     {
       "11":
-        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/2/Chevron_11.jpg",
+        "https://solutions-engineering.s3.amazonaws.com/berluti-demo/chevron/3/Chevron_11.jpg",
     },
   ];
   
