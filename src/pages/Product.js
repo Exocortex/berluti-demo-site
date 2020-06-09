@@ -20,9 +20,11 @@ let clicked = false;
 let loaded = false;
 
 const hideHand = () => {
-  document.getElementById("hand-indicator").classList.remove("hand");
-  document.getElementById("hand-indicator").classList.remove("bounce-2");
-  document.getElementById("hand-indicator").style = "display: none";
+  // document.getElementById("hand-indicator").classList.remove("hand");
+  // document.getElementById("hand-indicator").classList.remove("bounce-2");
+  document.getElementById("hand-indicator") == undefined
+    ? window.location.reload()
+    : (document.getElementById("hand-indicator").style = "display: none");
 };
 
 class Product extends React.Component {
@@ -124,7 +126,7 @@ class Product extends React.Component {
               <div
                 id="player"
                 style={{
-                  height: '50vh',
+                  height: "50vh",
                   width: "100%",
                   marginLeft: "auto",
                   marginRight: "auto",
