@@ -1,3 +1,5 @@
+
+
 .stage {
     display: flex;
     /* height: 330px; */
@@ -46,4 +48,8 @@
 #threekit-container{
     cursor: -webkit-grab; 
     cursor: grab;
+}
+
+#player{
+    touch-action: none;
 }
