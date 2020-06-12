@@ -15,10 +15,10 @@ const ProductList = {
     name: "Chevron",
     config: { Patina: ["TDM Intenso", "Nero Grigio", "Brun", "Simila Red"], Rotation: "2" },
     bg: [
-      "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/tdm_intenso.png",
-      "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/nero_grigio.jpg",
-      "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/brun.png",
-      "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/simila_red.png"
+      "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/TDM_swatch.png",
+      "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/nero_swatch.png",
+      "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/brun_swatch.png",
+      "https://solutions-engineering.s3.amazonaws.com/berluti-demo/form_icon/red_swatch.png"
 
     ],
     brand: "4 Styles",
