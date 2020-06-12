@@ -73,7 +73,9 @@ class Product extends React.Component {
           .then(async (api) => {
             window.player = api;
             window.configurator = await api.getConfigurator();
+            await api.when('loaded')
             await window.configurator.prefetchAttributes(["Rotation"]);
+            apply2DSpin({ attrName: "Rotation", direction: -1 })
             // api.on(
             //   window.player.scene.PHASES.PRELOADED,
             //   console.log('preload')
@@ -81,8 +83,11 @@ class Product extends React.Component {
 
             api.on(
               window.player.scene.PHASES.LOADED,
-              apply2DSpin({ attrName: "Rotation", direction: -1 })
+              // apply2DSpin({ attrName: "Rotation", direction: -1 })
             );
+
+
+            // api.when('loaded')
 
             api.on(
               window.player.scene.PHASES.RENDERED,
@@ -112,7 +117,7 @@ class Product extends React.Component {
             <div id="threekit-container">
               {this.state.loaded ? (
                 <div className="stage" id="hand-container">
-                  <div id="hand-indicator" class="hand bounce-2">
+                  <div id="hand-indicator" className="hand bounce-2">
                     <img
                       style={{ height: "30px", width: "30px" }}
                       src="https://solutions-engineering.s3.amazonaws.com/media/web-assets/hand.png"
