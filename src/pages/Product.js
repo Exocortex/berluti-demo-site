@@ -75,7 +75,7 @@ class Product extends React.Component {
             window.configurator = await api.getConfigurator();
             await api.when('loaded')
             await window.configurator.prefetchAttributes(["Rotation"]);
-            apply2DSpin({ attrName: "Rotation", direction: -1 })
+            apply2DSpin({ attrName: "Rotation", direction: -1 })(api)
             // api.on(
             //   window.player.scene.PHASES.PRELOADED,
             //   console.log('preload')
